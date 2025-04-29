@@ -2,33 +2,56 @@
 {% load static %}
 
 {% block content %}
-<h2>Cadastrar Beneficiário</h2>
 
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-    {% for field in new_beneficiary_form %}
-        <div class="form-group">
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
-            {% if field.errors %}
-                <div class="text-danger">{{ field.errors }}</div>
-            {% endif %}
+    <!-- Card 1: Dados Pessoais -->
+    <div class="row">
+        <div class="col-md-6">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Dados Pessoais</h3>
+            </div>
+            <div class="card-body">
+                {% for field in new_beneficiary_form %}
+                    {% if field.name == 'cep_address' %}
+                        </div></div>
+        </div> <!-- fecha card anterior e começa novo -->
+                        
+                        <!-- Card 2: Endereço -->
+                        <div class="col-md-6">
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">Endereço</h3>
+                            </div>
+                            <div class="card-body">
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-    {% endfor %}
-
-    <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Cadastrar</button>
 </form>
 
 <script>
     document.getElementById('cep').addEventListener('blur', function () {
         const cep = this.value.replace(/\D/g, '');
-    
+
         if (cep.length !== 8) {
             alert('CEP inválido!');
             return;
         }
-    
+
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
             .then(response => response.json())
             .then(data => {
@@ -43,7 +66,6 @@
                 console.error('Erro ao buscar o CEP:', error);
             });
     });
-    </script>
-
+</script>
 
 {% endblock %}

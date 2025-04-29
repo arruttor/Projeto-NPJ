@@ -6,7 +6,12 @@ class beneficiaryModelForm(forms.ModelForm):
         model = beneficiary
         fields = [
             'name',
+            'date_of_birth',
             'cpf',
+            'main_phone',
+            'other_phone',
+            'email',
+            'status_person',
             'id_doc',
             'issuing_authority',
             'issuing_date',
@@ -17,14 +22,10 @@ class beneficiaryModelForm(forms.ModelForm):
             'address',
             'number_address',
             'city',
-            'main_phone',
-            'other_phone',
-            'email',
-            'status_person',
-            'date_of_birth',
         ]
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'date_of_birth': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'cpf': forms.TextInput(attrs={'class': 'form-control'}),
             'id_doc': forms.TextInput(attrs={'class': 'form-control'}),
             'issuing_authority': forms.TextInput(attrs={'class': 'form-control'}),
@@ -40,5 +41,4 @@ class beneficiaryModelForm(forms.ModelForm):
             'other_phone': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'status_person': forms.Select(attrs={'class': 'form-control'}),
-            'date_of_birth': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
